@@ -13,6 +13,15 @@ const Button = (props) => (
 )
 
 const Statistics = ({good, neutral, bad, all, average, positive}) => {
+    if(all === 0) {
+        return(
+            <div>
+            <h2>Statistics</h2>
+                No feedback given
+            </div>
+        )
+    }
+    
     return (
     <div>
         <h2>Statistics</h2>
