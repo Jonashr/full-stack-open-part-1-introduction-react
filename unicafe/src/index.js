@@ -12,6 +12,21 @@ const Button = (props) => (
 
 )
 
+const Statistics = ({good, neutral, bad, all, average, positive}) => {
+    return (
+    <div>
+        <h2>Statistics</h2>
+        <Display value={good} text='Good'/>
+        <Display value={neutral} text='Neutral'/>
+        <Display value={bad} text='Bad'/>
+        <Display value={all} text='All' />
+        <Display value={average} text='Average' />
+        <DisplayWithPercentages value={positive} text='Positive' />
+    </div>
+    )
+}
+
+
 const App = () => {
     const [good, setGood] = useState(0)
     const [neutral, setNeutral] = useState(0)
@@ -47,13 +62,7 @@ const App = () => {
             <Button handleClick={() => setToGood(good + 1)} text='Good'>good</Button>
             <Button handleClick={() => setToNeutral(neutral + 1)} text='Neutral'/>
             <Button handleClick={() => setToBad(bad + 1)} text='Bad' />
-            <h2>Statistics</h2>
-            <Display value={good} text='Good'/>
-            <Display value={neutral} text='Neutral'/>
-            <Display value={bad} text='Bad'/>
-            <Display value={all} text='All' />
-            <Display value={average} text='Average' />
-            <DisplayWithPercentages value={positive} text='Positive' />
+            <Statistics good={good} bad={bad} neutral={neutral} all={all} average={average} positive={positive} />
         </div>
     )
 }
