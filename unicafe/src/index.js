@@ -1,9 +1,9 @@
 import React, {useState} from 'react'
 import ReactDOM from 'react-dom'
 
-const Display = props => <div>{props.text} {props.value}</div>
+const Statistic = props => <div>{props.text} {props.value}</div>
 
-const DisplayWithPercentages = props => <div>{props.text} {props.value} %</div>
+const StatisticWithPercentages = props => <div>{props.text} {props.value} %</div>
 
 const Button = (props) => (
     <button onClick={props.handleClick}>
@@ -25,12 +25,12 @@ const Statistics = ({good, neutral, bad, all, average, positive}) => {
     return (
     <div>
         <h2>Statistics</h2>
-        <Display value={good} text='Good'/>
-        <Display value={neutral} text='Neutral'/>
-        <Display value={bad} text='Bad'/>
-        <Display value={all} text='All' />
-        <Display value={average} text='Average' />
-        <DisplayWithPercentages value={positive} text='Positive' />
+        <Statistic value={good} text='Good'/>
+        <Statistic value={neutral} text='Neutral'/>
+        <Statistic value={bad} text='Bad'/>
+        <Statistic value={all} text='All' />
+        <Statistic value={average} text='Average' />
+        <StatisticWithPercentages value={positive} text='Positive' />
     </div>
     )
 }
