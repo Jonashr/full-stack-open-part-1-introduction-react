@@ -17,15 +17,24 @@ const App = (props) => {
   const [selected, setSelected] = useState(0)
   const min = Math.ceil(0)
   const max = Math.floor(anecdotes.length - 1)
+  const [votes, setVotes] = useState(Array.apply(null, new Array(anecdotes.length)).map(Number.prototype.valueOf,0))
 
   const setToSelected = newValue => {
       setSelected(newValue)
   }
 
+  const setToVotes = selectedIndex => {
+    const copy = {...votes}
+    copy[selectedIndex] += 1  
+    setVotes(copy)
+  }
+
   return (
     <div>
-        <Button handleClick={() => setToSelected(getRandomInt(min, max))} text='Generate random anecdote'/>
         <DisplayAnecdote selected={anecdotes[selected]} />
+        <DisplayAnecdote selected={votes[selected]} />
+        <Button handleClick={() => setToSelected(getRandomInt(min, max))} text='Generate random anecdote'/>
+        <Button handleClick={() => setToVotes(selected)} text='Vote' />        
     </div>
   )
 }
