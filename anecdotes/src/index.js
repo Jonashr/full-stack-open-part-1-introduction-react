@@ -13,11 +13,36 @@ const DisplayAnecdote = ({selected}) => {
     )
 }
 
+const DisplayAnecdoteVotes = ({selected}) => {
+    return(
+        <div>has {selected} votes</div>
+    )
+}
+
+function findIndexOfMax(arr) {
+    if (arr.length === 0) {
+        return -1;
+    }
+
+    let max = arr[0];
+    let maxIndex = 0;
+
+    for (var i in arr) {
+        if (arr[i] > max) {
+            maxIndex = i;
+            max = arr[i];
+        }
+    }
+
+    return maxIndex;
+}
+
 const App = (props) => {
   const [selected, setSelected] = useState(0)
   const min = Math.ceil(0)
   const max = Math.floor(anecdotes.length - 1)
   const [votes, setVotes] = useState(Array.apply(null, new Array(anecdotes.length)).map(Number.prototype.valueOf,0))
+  const [indexOfMax, setIndexOfMax] = useState(0)
 
   const setToSelected = newValue => {
       setSelected(newValue)
@@ -27,14 +52,24 @@ const App = (props) => {
     const copy = {...votes}
     copy[selectedIndex] += 1  
     setVotes(copy)
+    setToIndexOfMax(copy)     
+  }
+
+  const setToIndexOfMax = copy => {
+    const max = findIndexOfMax(copy)
+    setIndexOfMax(max)
   }
 
   return (
     <div>
+        <h1>Anecdote of the day</h1>
         <DisplayAnecdote selected={anecdotes[selected]} />
         <DisplayAnecdote selected={votes[selected]} />
         <Button handleClick={() => setToSelected(getRandomInt(min, max))} text='Generate random anecdote'/>
-        <Button handleClick={() => setToVotes(selected)} text='Vote' />        
+        <Button handleClick={() => setToVotes(selected)} text='Vote' />
+        <h2>Anecdote with the most votes</h2>
+        <DisplayAnecdote selected={anecdotes[indexOfMax]} />
+        <DisplayAnecdoteVotes selected={votes[indexOfMax]} />
     </div>
   )
 }
