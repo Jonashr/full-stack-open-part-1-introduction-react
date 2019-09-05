@@ -3,7 +3,7 @@ import ReactDOM from 'react-dom';
 
 const Header = (props) => {
     return (
-        <p>{props.course.name}</p>
+        <p>{props.name}</p>
     )
 }
 
@@ -12,6 +12,8 @@ const Part = (props) => {
         <p>{props.part} {props.exercises}</p>
     )
 }
+
+// Hard coded the first three parts of the array
 
 const Content = (props)=> {
     return (
@@ -50,7 +52,7 @@ const App = () => {
     }
 
     return (<div>
-                <Header course={course} />
+                <Header course={course.name} />
                 <Content parts={course.parts}/>
                 <Total parts={course.parts} />
             </div>
