@@ -8,14 +8,22 @@ const Button = (props) => (
 )
 
 const DisplayAnecdote = ({selected}) => {
+    
     return(
         <div>{selected}</div>
     )
 }
 
-const DisplayAnecdoteVotes = ({selected}) => {
+const DisplayMostVotes = ({selected, selectedVotes}) => {
+    if(selectedVotes === 0) {
+        return <div>All anecdotes have 0 votes</div>
+    }
+    
     return(
-        <div>has {selected} votes</div>
+        <div>
+        <DisplayAnecdote selected={selected} />
+        <div> has {selectedVotes} votes</div>
+        </div>
     )
 }
 
@@ -68,8 +76,9 @@ const App = (props) => {
         <Button handleClick={() => setToSelected(getRandomInt(min, max))} text='Generate random anecdote'/>
         <Button handleClick={() => setToVotes(selected)} text='Vote' />
         <h2>Anecdote with the most votes</h2>
-        <DisplayAnecdote selected={anecdotes[indexOfMax]} />
-        <DisplayAnecdoteVotes selected={votes[indexOfMax]} />
+        <DisplayMostVotes selected={anecdotes[indexOfMax]} selectedVotes={votes[indexOfMax]} />
+        {/* <DisplayAnecdote selected={anecdotes[indexOfMax]} />
+        <DisplayAnecdoteVotes selected={votes[indexOfMax]} /> */}
     </div>
   )
 }
