@@ -1,35 +1,9 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 
-const Header = (props) => {
-    return (
-        <p>{props.name}</p>
-    )
-}
-
-const Part = (props) => {
-    return (
-        <p>{props.part} {props.exercises}</p>
-    )
-}
-
-// Hard coded the first three parts of the array
-
-const Content = (props)=> {
-    return (
-        <div>
-        <Part part={props.parts[0].name} exercises={props.parts[0].exercises} />
-        <Part part={props.parts[1].name} exercises={props.parts[1].exercises} />
-        <Part part={props.parts[2].name} exercises={props.parts[2].exercises} />
-        </div>
-    )
-}
-
-const Total = (props) => {
-    return (
-        <p>{props.parts[0].exercises + props.parts[1].exercises + props.parts[2].exercises}</p>
-    )
-}
+import Header from './Header'
+import Content from './Content'
+import Total from './Total'
 
 const App = () => {
     const course = {
@@ -52,7 +26,7 @@ const App = () => {
     }
 
     return (<div>
-                <Header course={course.name} />
+                <Header courseName={course.name} />
                 <Content parts={course.parts}/>
                 <Total parts={course.parts} />
             </div>

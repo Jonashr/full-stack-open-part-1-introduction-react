@@ -1,38 +1,6 @@
-import React, {useState} from 'react'
+import React, {useState, useEffect} from 'react'
 import ReactDOM from 'react-dom'
-
-const Statistic = props => <tr><td>{props.text} {props.value}</td></tr>
-
-const StatisticWithPercentages = props => <tr><td>{props.text} {props.value} %</td></tr>
-
-const Button = (props) => (
-    <button onClick={props.handleClick}>
-        {props.text}
-    </button>
-
-)
-
-const Statistics = ({good, neutral, bad, all, average, positive}) => {
-    if(all === 0) {
-        return(
-            <div>No feedback given</div>
-        )
-    }
-    
-    return (
-    <table>
-        <tbody>
-        <Statistic value={good} text='Good'/>
-        <Statistic value={neutral} text='Neutral'/>
-        <Statistic value={bad} text='Bad'/>
-        <Statistic value={all} text='All' />
-        <Statistic value={average} text='Average' />
-        <StatisticWithPercentages value={positive} text='Positive' />
-        </tbody>
-    </table>
-    )
-}
-
+import Statistics from './Statistics'
 
 const App = () => {
     const [good, setGood] = useState(0)
@@ -42,35 +10,45 @@ const App = () => {
     const [average, setAverage] = useState(0)
     const [positive, setPositive] = useState(0)
 
-    const setToGood = newValue => {
+    // Calculates the average score and ratio of positive scores when good, neutral or bad is incremented.
+    useEffect(() => {
+      if(all === 0) {
+        return
+      }
+      setAverage((good - bad) / (all))
+      setPositive(good / (all) * 100)
+    }, [good, bad, neutral, all])
+
+    const setToGood = value => {
         setAll(all + 1)
-        setGood(newValue)
-        setAverage((newValue - bad) / (all + 1) )
-        setPositive((newValue / (all + 1)) * 100)
+        setGood(value)
     }
 
-    const setToNeutral = newValue => {
+    const setToNeutral = value => {
         setAll(all + 1)
-        setNeutral(newValue)
-        setAverage((good - bad) / (all + 1) )
-        setPositive((good / (all + 1) * 100) )
+        setNeutral(value)
     }
 
-    const setToBad = newValue => {
+    const setToBad = value => {
         setAll(all + 1)
-        setBad(newValue)
-        setAverage((good - newValue) / (all + 1) )
-        setPositive((good / (all + 1)  * 100) )
+        setBad(value)
     }
 
     return (
         <div>
             <h2>Give feedback</h2>
-            <Button handleClick={() => setToGood(good + 1)} text='Good'>good</Button>
-            <Button handleClick={() => setToNeutral(neutral + 1)} text='Neutral'/>
-            <Button handleClick={() => setToBad(bad + 1)} text='Bad' />
+            <button onClick={() => setToGood(good + 1)} >Good</button>
+            <button onClick={() => setToNeutral(neutral + 1)}>Neutral</button>
+            <button onClick={() => setToBad(bad + 1)}>Bad</button>
             <h2>Statistics</h2>
-            <Statistics good={good} bad={bad} neutral={neutral} all={all} average={average} positive={positive} />
+            <Statistics 
+              good={good} 
+              neutral={neutral}
+              bad={bad} 
+              all={all} 
+              average={average} 
+              positive={positive} 
+            />
         </div>
     )
 }
